@@ -1,0 +1,845 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "2.0.2",
+    "title": "API for service Aquatrack",
+    "description": "Showing off a base routes for application",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "https://aquatrack-api.onrender.com" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Water",
+      "description": "Change waterConsamption endpoint"
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Login error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "The user is logged out",
+            "content": {}
+          },
+          "401": {
+            "description": "Missing token authorization",
+            "content": {}
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get info about current user",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing token authorization ",
+            "content": {}
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/refresh": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Refresh user tokens",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing token authorization ",
+            "content": {}
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/users_count": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Watch how many users are registred in the app",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountUsersResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/update": {
+      "put": {
+        "tags": ["Auth"],
+        "summary": "Update info about user",
+        "security": [{ "Bearer": [true] }],
+        "requestBody": {
+          "description": "Object for update user",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad information",
+            "content": {}
+          },
+          "401": {
+            "description": "Missing token authorization",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/water/": {
+      "post": {
+        "tags": ["Water"],
+        "summary": "Route to post about water",
+        "security": [{ "Bearer": [true] }],
+        "requestBody": {
+          "description": "Post info about waterConsumption",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WaterPostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterPostResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User information missing",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/water/day/:date": {
+      "get": {
+        "tags": ["Water"],
+        "summary": "Route to get info about how much water was drinked by the day",
+        "parameters": [
+          {
+            "name": "Date",
+            "in": "path",
+            "required": true,
+            "description": "Day",
+            "schema": {
+              "type": "Date"
+            }
+          }
+        ],
+        "security": [{ "Bearer": [true] }],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterGetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User information missing",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/water/month-stats/:date": {
+      "get": {
+        "tags": ["Water"],
+        "summary": "Route to get info about how much water was drinked by the month",
+        "parameters": [
+          {
+            "name": "Month-Stats",
+            "in": "path",
+            "required": true,
+            "description": "Month",
+            "schema": {
+              "type": "Date"
+            }
+          }
+        ],
+        "security": [{ "Bearer": [true] }],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterGetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User information missing",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/water/:id": {
+      "put": {
+        "tags": ["Water"],
+        "summary": "Route to update info about how much water was drinked by the day",
+        "parameters": [
+          {
+            "name": "Update water info",
+            "in": "path",
+            "required": true,
+            "description": "User id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [{ "Bearer": [true] }],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterPostResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User information missing",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Water"],
+        "summary": "Route to delete info about how much water was drinked by the day",
+        "parameters": [
+          {
+            "name": "Delete water info",
+            "in": "path",
+            "required": true,
+            "description": "User id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [{ "Bearer": [true] }],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaterPostResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User information missing",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "user`s id"
+          },
+          "password": {
+            "type": "string",
+            "description": "user`s password"
+          },
+          "email": {
+            "type": "string",
+            "description": "user`s email",
+            "format": "email"
+          },
+          "name": {
+            "type": "string",
+            "description": "user`s name"
+          },
+          "gender": {
+            "type": "string",
+            "description": "user`s name"
+          },
+          "weight": {
+            "type": "number",
+            "description": "user`s weight"
+          },
+          "time": {
+            "type": "number",
+            "description": "user`s time for sport"
+          },
+          "waterRate": {
+            "type": "number",
+            "description": "user`s waterRate"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "user`s avatarURL"
+          },
+          "token": {
+            "type": "string",
+            "description": "user`s token"
+          }
+        }
+      },
+      "Water": {
+        "type": "object",
+        "properties": {
+          "consumedVolume": {
+            "type": "number",
+            "description": "Consumed Volume"
+          },
+          "date": {
+            "type": "Date",
+            "description": "Date"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner of water info"
+          }
+        }
+      },
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              }
+            },
+            "message": {
+              "type": "string",
+              "description": "Message about result",
+              "example": "User created"
+            }
+          }
+        },
+        "example": [
+          {
+            "user": {
+              "email": "mango123@gmail.com"
+            },
+            "message": "User created"
+          }
+        ]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "Just a jwt token"
+            },
+            "user": {
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              }
+            }
+          }
+        },
+
+        "example": [
+          {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXNzYWdlIjoiV2h5IGFyZSB5b3UgdHJ5IHRvIGRlY29kZSBpdD8ifQ.8FnSdONYyG6MTCwm4my9XHdg8RQNEhjn-emR9DBs5Bw",
+            "user": {
+              "email": "mango123@gmail.com"
+            }
+          }
+        ]
+      },
+      "CurrentResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "_id": {
+                "type": "string",
+                "description": "user`s id"
+              },
+              "password": {
+                "type": "string",
+                "description": "user`s password"
+              },
+              "email": {
+                "type": "string",
+                "description": "user`s email",
+                "format": "email"
+              },
+              "name": {
+                "type": "string",
+                "description": "user`s name"
+              },
+              "gender": {
+                "type": "string",
+                "description": "user`s name"
+              },
+              "weight": {
+                "type": "number",
+                "description": "user`s weight"
+              },
+              "time": {
+                "type": "number",
+                "description": "user`s time for sport"
+              },
+              "waterRate": {
+                "type": "number",
+                "description": "user`s waterRate"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "user`s avatarURL"
+              },
+              "token": {
+                "type": "string",
+                "description": "user`s token"
+              }
+            }
+          }
+        },
+
+        "example": [
+          {
+            "_id": "664ce5b36a1a12bf746265c7",
+            "password": "$2a$10$lWIBnmq8a3sV1sXXcjpmGOax1Drw4qxNt4ViiQiB244NoUYAPox.G",
+            "email": "jasonwilhem12@gmail.com",
+            "name": "Jason Wilhem",
+            "gender": "male",
+            "weight": 98,
+            "time": 3,
+            "waterRate": 1000,
+            "avatarURL": "http://www.gravatar.com/avatar/cae73c2e854be6c0a89fcd6bbb5b28be",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NGNlNWIzNmExYTA4YmY3NDYyNjVjNyIsImlhdCI6MTcxNjMyMjEyMn0.J5T57VS3La7R271mBFr6gzV8TlrnKYDc1lbBWjh_KmA"
+          }
+        ]
+      },
+      "CountUsersResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "number",
+            "description": "Message about count of registred users",
+            "example": "213"
+          }
+        }
+      },
+      "UpdateRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "UpdateResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "_id": {
+                "type": "string",
+                "description": "user`s id"
+              },
+              "password": {
+                "type": "string",
+                "description": "user`s password"
+              },
+              "email": {
+                "type": "string",
+                "description": "user`s email",
+                "format": "email"
+              },
+              "name": {
+                "type": "string",
+                "description": "user`s name"
+              },
+              "gender": {
+                "type": "string",
+                "description": "user`s name"
+              },
+              "weight": {
+                "type": "number",
+                "description": "user`s weight"
+              },
+              "time": {
+                "type": "number",
+                "description": "user`s time for sport"
+              },
+              "waterRate": {
+                "type": "number",
+                "description": "user`s waterRate"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "user`s avatarURL"
+              },
+              "token": {
+                "type": "string",
+                "description": "user`s token"
+              }
+            }
+          }
+        },
+
+        "example": [
+          {
+            "_id": "664ce5b36a1a12bf746265c7",
+            "password": "$2a$10$lWIBnmq8a3sV1sXXcjpmGOax1Drw4qxNt4ViiQiB244NoUYAPox.G",
+            "email": "jasonwilhem12@gmail.com",
+            "name": "Jason Wilhem",
+            "gender": "male",
+            "weight": 98,
+            "time": 3,
+            "waterRate": 1000,
+            "avatarURL": "http://www.gravatar.com/avatar/cae73c2e854be6c0a89fcd6bbb5b28be",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NGNlNWIzNmExYTA4YmY3NDYyNjVjNyIsImlhdCI6MTcxNjMyMjEyMn0.J5T57VS3La7R271mBFr6gzV8TlrnKYDc1lbBWjh_KmA"
+          }
+        ]
+      },
+      "RefreshResponse": {
+        "type": "object",
+        "properties": {
+          "type": "string",
+          "description": "Message about count of registred users",
+          "example": {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6IjY2NGY1NTczZTM2MjFhZWRkODkwZDhlZSIsImlhdCI6MTcxNjQ3NTMwNSwiZXhwIjoxNzE3NzcxMzA1fSwiaWF0IjoxNzE2NDgxMDE0LCJleHAiOjE3MTY1MjQyMTR9.HZUYz2LQvr0zDE46OpUQt7vG2dRGLvLW1aBvCfq8BJc",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6IjY2NGY1NTczZTM2MjFhZWRkODkwZDhlZSIsImlhdCI6MTcxNjQ3NTMwNSwiZXhwIjoxNzE3NzcxMzA1fSwiaWF0IjoxNzE2NDgxMDE0LCJleHAiOjE3MTc3NzcwMTR9.qSgMOEjBrtK6XlXa9bwKM4v5xHP3CSmPQkqtx1nLfm4"
+          }
+        },
+
+        "example": [
+          {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6IjY2NGY1NTczZTM2MjFhZWRkODkwZDhlZSIsImlhdCI6MTcxNjQ3NTMwNSwiZXhwIjoxNzE3NzcxMzA1fSwiaWF0IjoxNzE2NDgxMDE0LCJleHAiOjE3MTY1MjQyMTR9.HZUYz2LQvr0zDE46OpUQt7vG2dRGLvLW1aBvCfq8BJc",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6IjY2NGY1NTczZTM2MjFhZWRkODkwZDhlZSIsImlhdCI6MTcxNjQ3NTMwNSwiZXhwIjoxNzE3NzcxMzA1fSwiaWF0IjoxNzE2NDgxMDE0LCJleHAiOjE3MTc3NzcwMTR9.qSgMOEjBrtK6XlXa9bwKM4v5xHP3CSmPQkqtx1nLfm4"
+          }
+        ]
+      },
+      "WaterPostRequest": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "consumedVolume": {
+            "type": "number",
+            "description": "A water volume",
+            "example": "450"
+          }
+        }
+      },
+      "WaterPostResponse": {
+        "type": "object",
+        "properties": {
+          "consumedVolume": {
+            "type": "string",
+            "description": "Consumed water by one time"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner id"
+          },
+          "_id": {
+            "type": "string",
+            "description": "User id"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Whet was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Whet was updated"
+          }
+        },
+        "example": {
+          "consumedVolume": 450,
+          "owner": "664b721d45646885244129aa",
+          "_id": "664d20792616d2e72aefdb1f",
+          "date": "2024-05-21T22:30:17.360Z",
+          "createdAt": "2024-05-21T22:30:17.363Z",
+          "updatedAt": "2024-05-21T22:30:17.363Z"
+        }
+      },
+      "WaterGetResponse": {
+        "type": "object",
+        "properties": {
+          "consumedVolume": {
+            "type": "string",
+            "description": "Consumed water by one time"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner id"
+          },
+          "_id": {
+            "type": "string",
+            "description": "User id"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Whet was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Whet was updated"
+          }
+        },
+        "example": {
+          "consumedVolume": 450,
+          "owner": "664b721d45646885244129aa",
+          "_id": "664d20792616d2e72aefdb1f",
+          "date": "2024-05-21T22:30:17.360Z",
+          "createdAt": "2024-05-21T22:30:17.363Z",
+          "updatedAt": "2024-05-21T22:30:17.363Z"
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
