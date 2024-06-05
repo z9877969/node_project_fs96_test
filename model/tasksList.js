@@ -48,7 +48,7 @@ const cardsSchema = new Schema({
   deadline: {
     type: Date,
   },
-  parent: {
+  columnId: {
     type: String,
   },
 });
