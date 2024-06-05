@@ -6,7 +6,7 @@ import {
   SignUp,
   LogOut,
   refreshToken,
-} from '../controllers/authControllers';
+} from '../controllers/authControllers.js';
 import { refreshAuth } from '../middlewares/refreshAuth.js';
 import { auth } from '../middlewares/authenticate.js';
 
