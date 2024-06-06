@@ -16,7 +16,8 @@ authRouter.post('/register', validateBody(createUserSchema), SignUp);
 
 authRouter.post('/login', validateBody(loginUserSchema), SignIn);
 
-userRouter.get('/refresh', refreshAuth, refreshToken);
 authRouter.post('/logout', auth, LogOut);
+
+authRouter.get('/refresh', refreshAuth, refreshToken);
 
 export default authRouter;

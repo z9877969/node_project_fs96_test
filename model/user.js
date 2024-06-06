@@ -17,6 +17,7 @@ const userSchema = new Schema(
       required: [true, 'Password is required'],
     },
     avatarURL: String,
+    theme: String,
     accessToken: {
       type: String,
       default: null,

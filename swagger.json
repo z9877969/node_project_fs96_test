@@ -18,12 +18,12 @@
       "description": "Authorization endpoints"
     },
     {
-      "name": "Water",
-      "description": "Change waterConsamption endpoint"
+      "name": "Users",
+      "description": "Endpoint about user information"
     }
   ],
   "paths": {
-    "/users/register": {
+    "/auth/register": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -61,7 +61,7 @@
         }
       }
     },
-    "/users/login": {
+    "/auth/login": {
       "post": {
         "tags": ["Auth"],
         "summary": "User login",
@@ -95,7 +95,7 @@
         }
       }
     },
-    "/users/logout": {
+    "/auth/logout": {
       "post": {
         "tags": ["Auth"],
         "summary": "User logout",
@@ -118,7 +118,7 @@
     },
     "/users/current": {
       "get": {
-        "tags": ["Auth"],
+        "tags": ["Users"],
         "summary": "Get info about current user",
         "security": [{ "Bearer": [] }],
         "responses": {
@@ -143,11 +143,11 @@
         }
       }
     },
-    "/users/refresh": {
+    "/auth/refresh": {
       "get": {
         "tags": ["Auth"],
         "summary": "Refresh user tokens",
-        "security": [{ "Bearer": [] }],
+        "security": [{ "refreshBearer": [] }],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -170,31 +170,9 @@
         }
       }
     },
-    "/users/users_count": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Watch how many users are registred in the app",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CountUsersResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {}
-          }
-        }
-      }
-    },
     "/users/update": {
       "put": {
-        "tags": ["Auth"],
+        "tags": ["Users"],
         "summary": "Update info about user",
         "security": [{ "Bearer": [true] }],
         "requestBody": {
@@ -225,194 +203,6 @@
           },
           "401": {
             "description": "Missing token authorization",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/water/": {
-      "post": {
-        "tags": ["Water"],
-        "summary": "Route to post about water",
-        "security": [{ "Bearer": [true] }],
-        "requestBody": {
-          "description": "Post info about waterConsumption",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WaterPostRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WaterPostResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "User information missing",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/water/day/:date": {
-      "get": {
-        "tags": ["Water"],
-        "summary": "Route to get info about how much water was drinked by the day",
-        "parameters": [
-          {
-            "name": "Date",
-            "in": "path",
-            "required": true,
-            "description": "Day",
-            "schema": {
-              "type": "Date"
-            }
-          }
-        ],
-        "security": [{ "Bearer": [true] }],
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WaterGetResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "User information missing",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/water/month-stats/:date": {
-      "get": {
-        "tags": ["Water"],
-        "summary": "Route to get info about how much water was drinked by the month",
-        "parameters": [
-          {
-            "name": "Month-Stats",
-            "in": "path",
-            "required": true,
-            "description": "Month",
-            "schema": {
-              "type": "Date"
-            }
-          }
-        ],
-        "security": [{ "Bearer": [true] }],
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WaterGetResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "User information missing",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/water/:id": {
-      "put": {
-        "tags": ["Water"],
-        "summary": "Route to update info about how much water was drinked by the day",
-        "parameters": [
-          {
-            "name": "Update water info",
-            "in": "path",
-            "required": true,
-            "description": "User id",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [{ "Bearer": [true] }],
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WaterPostResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "User information missing",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {}
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Water"],
-        "summary": "Route to delete info about how much water was drinked by the day",
-        "parameters": [
-          {
-            "name": "Delete water info",
-            "in": "path",
-            "required": true,
-            "description": "User id",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [{ "Bearer": [true] }],
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WaterPostResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "User information missing",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
             "content": {}
           }
         }
@@ -465,23 +255,6 @@
           "token": {
             "type": "string",
             "description": "user`s token"
-          }
-        }
-      },
-      "Water": {
-        "type": "object",
-        "properties": {
-          "consumedVolume": {
-            "type": "number",
-            "description": "Consumed Volume"
-          },
-          "date": {
-            "type": "Date",
-            "description": "Date"
-          },
-          "owner": {
-            "type": "string",
-            "description": "Owner of water info"
           }
         }
       },
@@ -747,95 +520,15 @@
             "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6IjY2NGY1NTczZTM2MjFhZWRkODkwZDhlZSIsImlhdCI6MTcxNjQ3NTMwNSwiZXhwIjoxNzE3NzcxMzA1fSwiaWF0IjoxNzE2NDgxMDE0LCJleHAiOjE3MTc3NzcwMTR9.qSgMOEjBrtK6XlXa9bwKM4v5xHP3CSmPQkqtx1nLfm4"
           }
         ]
-      },
-      "WaterPostRequest": {
-        "type": "object",
-        "required": [],
-        "properties": {
-          "consumedVolume": {
-            "type": "number",
-            "description": "A water volume",
-            "example": "450"
-          }
-        }
-      },
-      "WaterPostResponse": {
-        "type": "object",
-        "properties": {
-          "consumedVolume": {
-            "type": "string",
-            "description": "Consumed water by one time"
-          },
-          "owner": {
-            "type": "string",
-            "description": "Owner id"
-          },
-          "_id": {
-            "type": "string",
-            "description": "User id"
-          },
-          "date": {
-            "type": "string",
-            "description": "Date"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Whet was created"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Whet was updated"
-          }
-        },
-        "example": {
-          "consumedVolume": 450,
-          "owner": "664b721d45646885244129aa",
-          "_id": "664d20792616d2e72aefdb1f",
-          "date": "2024-05-21T22:30:17.360Z",
-          "createdAt": "2024-05-21T22:30:17.363Z",
-          "updatedAt": "2024-05-21T22:30:17.363Z"
-        }
-      },
-      "WaterGetResponse": {
-        "type": "object",
-        "properties": {
-          "consumedVolume": {
-            "type": "string",
-            "description": "Consumed water by one time"
-          },
-          "owner": {
-            "type": "string",
-            "description": "Owner id"
-          },
-          "_id": {
-            "type": "string",
-            "description": "User id"
-          },
-          "date": {
-            "type": "string",
-            "description": "Date"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Whet was created"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Whet was updated"
-          }
-        },
-        "example": {
-          "consumedVolume": 450,
-          "owner": "664b721d45646885244129aa",
-          "_id": "664d20792616d2e72aefdb1f",
-          "date": "2024-05-21T22:30:17.360Z",
-          "createdAt": "2024-05-21T22:30:17.363Z",
-          "updatedAt": "2024-05-21T22:30:17.363Z"
-        }
       }
     },
     "securitySchemes": {
       "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "refreshBearer": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
