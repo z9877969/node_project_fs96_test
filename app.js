@@ -7,8 +7,9 @@ import boardRouter from './routes/boardRoutes.js';
 import columnRouter from './routes/columnRouters.js';
 
 
-// import authRouter from './routes/authRouter.js'
-// import userRouter from './routes/userRouter.js';
+import authRouter from './routes/authRouter.js'
+import userRouter from './routes/userRouter.js';
+import cardRouter from './routes/cardRouter.js';
 
 export const app = express();
 
@@ -16,12 +17,13 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
 
-// app.use('/auth/', authRouter);
-// app.use('/users/', userRouter);
-app.use("/boards/", boardRouter)
-app.use("/columns/", columnRouter)
+app.use('/auth/', authRouter);
+app.use('/users/', userRouter);
+app.use("/boards/", boardRouter);
+app.use("/columns/", columnRouter);
+app.use("/cards/", cardRouter);
 
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Route not found' });

@@ -27,30 +27,33 @@ const columnsSchema = new Schema(
     boardId: {
       type: String,
     },
-    card: [{ type: Schema.Types.ObjectId, ref: 'Card' }],
+    cards: [{ type: Schema.Types.ObjectId, ref: 'Card' }],
   },
   { timestamps: true, versionKey: false }
 );
 
 export const Column = model('Column', columnsSchema);
 
-const cardsSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
+const cardsSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+    },
+    priority: {
+      enum: ['without priority', 'low', 'medium', 'high'],
+    },
+    deadline: {
+      type: Date,
+    },
+    columnId: {
+      type: String,
+    },
   },
-  description: {
-    type: String,
-  },
-  priority: {
-    enum: ['without priority', 'low', 'medium', 'high'],
-  },
-  deadline: {
-    type: Date,
-  },
-  columnId: {
-    type: String,
-  },
-});
+  { timestamps: true, versionKey: false }
+);
 
 export const Card = model('Card', cardsSchema);

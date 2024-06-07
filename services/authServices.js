@@ -6,7 +6,7 @@ import {
 } from '../middlewares/isValidJWT.js';
 import bcrypt from 'bcryptjs';
 import 'dotenv/config';
-asd;
+// asd;
 
 export const findUserByEmail = async (email) => {
   const user = await User.findOne({ email });
