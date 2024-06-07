@@ -5,6 +5,7 @@ export const addBoard = async (req, res, next) => {
   const { name } = req.body;
 
   try {
+    console.log(req);
     const board = {
       name,
       owner: req.user.id,
