@@ -5,6 +5,7 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
+      required: [true, 'Name is required'],
       default: null,
     },
     email: {
@@ -17,7 +18,10 @@ const userSchema = new Schema(
       required: [true, 'Password is required'],
     },
     avatarURL: String,
-    theme: String,
+    theme: {
+      type: String,
+      default: null,
+    },
     accessToken: {
       type: String,
       default: null,

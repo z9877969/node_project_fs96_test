@@ -1,5 +1,9 @@
 import HttpError from '../helpers/HttpError.js';
-import { findUserByToken, updateUserData } from '../services/userServices.js';
+import {
+  findUserByToken,
+  updateUserData,
+  sendMail,
+} from '../services/userServices.js';
 
 export const userCurrent = async (req, res, next) => {
   const { token } = req.user;
@@ -37,6 +41,17 @@ export const userUpdate = async (req, res, next) => {
     }
 
     res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const userHelpRequest = async (req, res, next) => {
+  const { sender, comment } = req.body;
+  try {
+    await sendMail(sender, comment);
+
+    res.status(200).json({ message: 'Mail was sent' });
   } catch (error) {
     next(error);
   }

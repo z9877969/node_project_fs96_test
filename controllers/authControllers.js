@@ -1,5 +1,4 @@
 import HttpError from '../helpers/HttpError.js';
-import gravatar from 'gravatar';
 import {
   createUser,
   findUserByEmail,
@@ -9,16 +8,16 @@ import {
 } from '../services/authServices.js';
 
 export const SignUp = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   try {
     const user = await findUserByEmail(email);
     if (user) {
       throw HttpError(409, 'User already exist');
     }
 
-    const avatarURL = gravatar.url(email, null, false);
+    const avatarURL = null;
 
-    await createUser({ email, password, avatarURL });
+    await createUser({ name, email, password, avatarURL });
 
     res.status(201).json({
       user: {

@@ -1,9 +1,15 @@
 import express from 'express';
-import { userCurrent, userUpdate } from '../controllers/usersControllers.js';
+import {
+  userCurrent,
+  userUpdate,
+  userHelpRequest,
+} from '../controllers/usersControllers.js';
 import { auth } from '../middlewares/authenticate.js';
 import { upload } from '../middlewares/upload.js';
 
 const userRouter = express.Router();
+
+userRouter.post('/help', auth, userHelpRequest);
 
 userRouter.get('/current', auth, userCurrent);
 
