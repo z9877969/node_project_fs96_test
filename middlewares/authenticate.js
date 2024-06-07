@@ -15,7 +15,7 @@ export const auth = async (req, res, next) => {
 
     const user = await User.findById(id);
 
-    if (!user?.accessToken || user.accessToken !== token) {
+    if (!user.accessToken || user.accessToken !== token) {
       next(HttpError(401, 'Unauthorized'));
     }
     req.user = user;

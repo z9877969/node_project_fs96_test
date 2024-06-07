@@ -1,5 +1,5 @@
 import HttpError from '../helpers/HttpError.js';
-import { Board } from '../model/tasksList.js';
+import { Board, Card, Column } from '../model/tasksList.js';
 
 export const addBoard = async (req, res, next) => {
   const { name } = req.body;
@@ -13,7 +13,50 @@ export const addBoard = async (req, res, next) => {
 
     const newBoard = await Board.create(board);
 
-    res.status(200).json(newBoard);
+    res.status(201).json(newBoard);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllBoards = async (req, res, next) => {
+  const owner = req.user.id;
+
+  if (!owner) {
+    throw HttpError(404);
+  }
+
+  try {
+    const allBoards = await Board.find({ owner }).populate('columns');
+
+    if (!allBoards) {
+      throw HttpError(404);
+    }
+
+    res.status(200).send(allBoards);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getOneBoard = async (req, res, next) => {
+  const { boardId } = req.params;
+
+  try {
+    const board = await Board.findById(boardId);
+
+    if (!board) {
+      throw HttpError(404);
+    }
+
+    const columns = await Column.find({ boardId });
+
+    const boardWithColumns = {
+      ...board.toObject(),
+      columns,
+    };
+
+    res.status(200).send({ board: boardWithColumns });
   } catch (error) {
     next(error);
   }
@@ -53,6 +96,13 @@ export const deleteBoard = async (req, res, next) => {
     if (!board) {
       throw HttpError(404);
     }
+
+    const columns = await Column.find({ boardId: id });
+    const columnIds = columns.map((column) => column._id);
+
+    await Column.deleteMany({ boardId: id });
+    await Card.deleteMany({ columnId: { $in: columnIds } });
+
     res.status(200).json(board);
   } catch (error) {
     next(error);
