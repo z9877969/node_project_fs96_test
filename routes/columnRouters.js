@@ -6,13 +6,14 @@ import {
   getAllColumns,
   getOneColumn,
 } from '../controllers/columnController.js';
+import { auth } from '../middlewares/authenticate.js';
 
 const columnRouter = express.Router();
 
-columnRouter.post('/', addColumn);
-columnRouter.put('/:columnId', editColumn);
-columnRouter.delete('/:columnId', deleteColumn);
-columnRouter.get('/', getAllColumns);
-columnRouter.get('/:columnId', getOneColumn);
+columnRouter.post('/', auth, addColumn);
+columnRouter.put('/:columnId', auth, editColumn);
+columnRouter.delete('/:columnId', auth, deleteColumn);
+columnRouter.get('/', auth, getAllColumns);
+columnRouter.get('/:columnId', auth, getOneColumn);
 
 export default columnRouter;

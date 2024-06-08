@@ -69,22 +69,23 @@ export const getOneColumn = async (req, res, next) => {
 };
 
 export const editColumn = async (req, res, next) => {
-  const { id } = req.params;
+  const { columnId } = req.params;
   const { boardId } = req.body;
 
   try {
-    const result = await Column.findOneAndUpdate(
-      {
-        _id: id,
-        boardId,
-      },
-      req.body,
-      { new: true }
-    );
+    const column = await Column.findById(columnId);
 
-    if (!result) {
+    if (!column) {
       throw HttpError(404);
     }
+
+    if (column.boardId.toString() !== boardId.toString()) {
+      throw HttpError(400, 'Column does not belong to the specified board');
+    }
+
+    const result = await Column.findByIdAndUpdate(columnId, req.body, {
+      new: true,
+    });
 
     res.status(200).send(result);
   } catch (error) {
@@ -93,22 +94,27 @@ export const editColumn = async (req, res, next) => {
 };
 
 export const deleteColumn = async (req, res, next) => {
-  const { id } = req.params;
+  const { columnId } = req.params;
   const { boardId } = req.body;
 
   try {
-    const column = await Column.findOneAndDelete({
-      _id: id,
-      boardId,
-    });
+    const column = await Column.findById(columnId);
 
     if (!column) {
       throw HttpError(404);
     }
 
-    await Card.deleteMany({ columnId: id });
+    if (column.boardId.toString() !== boardId.toString()) {
+      throw HttpError(400, 'Column does not belong to the specified board');
+    }
 
-    res.status(200).json(column);
+    const result = await Column.findByIdAndDelete({
+      _id: columnId,
+    });
+
+    await Card.deleteMany({ columnId });
+
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }

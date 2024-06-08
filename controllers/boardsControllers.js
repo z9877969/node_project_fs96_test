@@ -5,7 +5,6 @@ export const addBoard = async (req, res, next) => {
   const { name } = req.body;
 
   try {
-    console.log(req);
     const board = {
       name,
       owner: req.user.id,
@@ -63,20 +62,23 @@ export const getOneBoard = async (req, res, next) => {
 };
 
 export const editBoard = async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const result = await Board.findOneAndUpdate(
-      {
-        _id: id,
-        owner: req.user.id,
-      },
-      req.body,
-      { new: true }
-    );
+  const { boardId } = req.params;
+  const { owner } = req.user.id;
 
-    if (!result) {
+  try {
+    const board = await board.findById(boardId);
+
+    if (!board) {
       throw HttpError(404);
     }
+
+    if (board.owner.toString() !== owner.toString()) {
+      throw HttpError(400, 'Board does not belong to the specified user');
+    }
+
+    const result = await Board.findByIdAndUpdate(boardId, req.body, {
+      new: true,
+    });
 
     res.status(200).send(result);
   } catch (error) {
@@ -85,25 +87,31 @@ export const editBoard = async (req, res, next) => {
 };
 
 export const deleteBoard = async (req, res, next) => {
-  const { id } = req.params;
+  const { boardId } = req.params;
+  const { owner } = req.body;
 
   try {
-    const board = await Board.findOneAndDelete({
-      _id: id,
-      owner: req.user.id,
-    });
+    const board = await Board.findById(boardId);
 
     if (!board) {
       throw HttpError(404);
     }
 
-    const columns = await Column.find({ boardId: id });
+    if (board.owner.toString() !== owner.toString()) {
+      throw HttpError(400, 'Board does not belong to the specified user');
+    }
+
+    const result = await Board.findByIdAndDelete({
+      _id: boardId,
+    });
+
+    const columns = await Column.find({ boardId });
     const columnIds = columns.map((column) => column._id);
 
-    await Column.deleteMany({ boardId: id });
+    await Column.deleteMany({ boardId });
     await Card.deleteMany({ columnId: { $in: columnIds } });
 
-    res.status(200).json(board);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }

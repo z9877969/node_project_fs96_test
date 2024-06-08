@@ -10,7 +10,6 @@ import boardRouter from './routes/boardRoutes.js';
 import columnRouter from './routes/columnRouters.js';
 import cardRouter from './routes/cardRouter.js';
 
-
 export const app = express();
 
 app.use(morgan('tiny'));
@@ -20,9 +19,9 @@ app.use(express.json());
 app.use('/auth/', authRouter);
 app.use('/users/', userRouter);
 
-app.use("/boards/", boardRouter);
-app.use("/columns/", columnRouter);
-app.use("/cards/", cardRouter);
+app.use('/boards/', boardRouter);
+app.use('/columns/', columnRouter);
+app.use('/cards/', cardRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

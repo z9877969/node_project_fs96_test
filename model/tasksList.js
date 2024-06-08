@@ -44,10 +44,13 @@ const cardsSchema = new Schema(
       type: String,
     },
     priority: {
+      type: String,
       enum: ['without priority', 'low', 'medium', 'high'],
+      default: 'without priority',
     },
     deadline: {
       type: Date,
+      default: null,
     },
     columnId: {
       type: String,
