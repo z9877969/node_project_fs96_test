@@ -58,17 +58,23 @@ export const getOneCard = async (req, res, next) => {
 };
 
 export const editCard = async (req, res, next) => {
-  const { id, columnId } = req.params;
+  const { cardId } = req.params;
+  const { columnId } = req.body;
 
   try {
-    const result = await Card.findOneAndUpdate({
-      _id: id,
-      columnId,
-    });
+    const card = await Card.findById(cardId);
 
-    if (!result) {
+    if (!card) {
       throw HttpError(404);
     }
+
+    if (card.columnId.toString() !== columnId.toString()) {
+      throw HttpError(400, 'Card does not belong to the specified column');
+    }
+
+    const result = await Card.findByIdAndUpdate(cardId, req.body, {
+      new: true,
+    });
 
     res.status(200).send(result);
   } catch (error) {
@@ -77,17 +83,23 @@ export const editCard = async (req, res, next) => {
 };
 
 export const deleteCard = async (req, res, next) => {
-  const { id } = req.body;
-  const { columnId } = req.params;
+  const { cardId } = req.params;
+  const { columnId } = req.body;
 
   try {
-    const card = await Card.findOneAndDelete({ _id: id, columnId });
+    const card = await Card.findById(cardId);
 
     if (!card) {
       throw HttpError(404);
     }
 
-    res.status(200).json(card);
+    if (card.columnId.toString() !== columnId.toString()) {
+      throw HttpError(400, 'Card does not belong to the specified column');
+    }
+
+    const result = await Card.findByIdAndDelete({ _id: cardId });
+
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
