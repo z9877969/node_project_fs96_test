@@ -2,11 +2,11 @@ import HttpError from '../helpers/HttpError.js';
 import { Board, Card, Column } from '../model/tasksList.js';
 
 export const addBoard = async (req, res, next) => {
-  const { name } = req.body;
+  const { title } = req.body;
 
   try {
     const board = {
-      name,
+      title,
       owner: req.user.id,
     };
 
@@ -63,16 +63,16 @@ export const getOneBoard = async (req, res, next) => {
 
 export const editBoard = async (req, res, next) => {
   const { boardId } = req.params;
-  const { owner } = req.user.id;
+  const { owner } = req.body;
 
   try {
-    const board = await board.findById(boardId);
+    const board = await Board.findById(boardId);
 
     if (!board) {
       throw HttpError(404);
     }
 
-    if (board.owner.toString() !== owner.toString()) {
+    if (!board.owner || board.owner.toString() !== owner.toString()) {
       throw HttpError(400, 'Board does not belong to the specified user');
     }
 

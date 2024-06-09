@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const boardSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       default: null,
       required: [true, 'Set name for board'],
@@ -10,6 +10,7 @@ const boardSchema = new Schema(
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'user',
+      required: true,
     },
     columns: [{ type: Schema.Types.ObjectId, ref: 'Column' }],
   },
@@ -26,6 +27,7 @@ const columnsSchema = new Schema(
     },
     boardId: {
       type: String,
+      required: [true, 'Board ID is required'],
     },
     cards: [{ type: Schema.Types.ObjectId, ref: 'Card' }],
   },
@@ -54,6 +56,7 @@ const cardsSchema = new Schema(
     },
     columnId: {
       type: String,
+      required: true,
     },
   },
   { timestamps: true, versionKey: false }

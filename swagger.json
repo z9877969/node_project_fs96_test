@@ -224,14 +224,22 @@
       "post": {
         "tags": ["Boards"],
         "summary": "Create new board",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "type": "string",
+            "description": "Enter title name "
+          }
+        ],
         "requestBody": {
           "description": "Boards object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BoardRequest"
+                "$ref": "#/components/schemas/CreateBoardRequest"
               }
             }
           }
@@ -242,7 +250,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BoardResponse"
+                  "$ref": "#/components/schemas/CreateBoardResponse"
                 }
               }
             }
@@ -267,7 +275,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetBoardRequest"
+                "$ref": "#/components/schemas/GetAllBoardRequest"
               }
             }
           }
@@ -278,7 +286,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetBoardResponse"
+                  "$ref": "#/components/schemas/GetAllBoardResponse"
                 }
               }
             }
@@ -298,7 +306,15 @@
       "get": {
         "tags": ["Boards"],
         "summary": "Get board per id",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter board id"
+          }
+        ],
         "requestBody": {
           "description": "Boards object",
           "required": true,
@@ -333,10 +349,25 @@
       },
       "put": {
         "tags": ["Boards"],
-        "summary": "Edit one board per id",
-        "parameters": [],
+        "summary": "Edit board per id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter board id"
+          },
+          {
+            "in": "query",
+            "name": "owner",
+            "required": true,
+            "type": "string",
+            "description": "Enter owner id"
+          }
+        ],
         "requestBody": {
-          "description": "Boards object",
+          "description": "Object for update board",
           "required": true,
           "content": {
             "application/json": {
@@ -369,8 +400,23 @@
       },
       "delete": {
         "tags": ["Boards"],
-        "summary": "Delete one board per id",
-        "parameters": [],
+        "summary": "Delete board per id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter board id"
+          },
+          {
+            "in": "query",
+            "name": "owner",
+            "required": true,
+            "type": "string",
+            "description": "Enter owner id"
+          }
+        ],
         "requestBody": {
           "description": "Boards object",
           "required": true,
@@ -408,14 +454,29 @@
       "post": {
         "tags": ["Columns"],
         "summary": "Create new column",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "required": true,
+            "type": "string",
+            "description": "Enter title name "
+          },
+          {
+            "in": "query",
+            "name": "boardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter board id"
+          }
+        ],
         "requestBody": {
           "description": "Columns object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ColumnRequest"
+                "$ref": "#/components/schemas/CreateColumnRequest"
               }
             }
           }
@@ -426,7 +487,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ColumnResponse"
+                  "$ref": "#/components/schemas/CreateColumnResponse"
                 }
               }
             }
@@ -444,14 +505,22 @@
       "get": {
         "tags": ["Columns"],
         "summary": "Get all Columns",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "boardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter board id"
+          }
+        ],
         "requestBody": {
           "description": "Columns object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetColumnRequest"
+                "$ref": "#/components/schemas/GetAllColumnRequest"
               }
             }
           }
@@ -462,7 +531,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetColumnResponse"
+                  "$ref": "#/components/schemas/GetAllColumnResponse"
                 }
               }
             }
@@ -481,8 +550,16 @@
     "/columns/:columnId": {
       "get": {
         "tags": ["Columns"],
-        "summary": "Get one column per id",
-        "parameters": [],
+        "summary": "Get column per id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "type": "string",
+            "description": "Enter column id"
+          }
+        ],
         "requestBody": {
           "description": "Columns object",
           "required": true,
@@ -518,7 +595,22 @@
       "put": {
         "tags": ["Columns"],
         "summary": "Edit column per id",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "type": "string",
+            "description": "Enter column id"
+          },
+          {
+            "in": "query",
+            "name": "boardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter board id"
+          }
+        ],
         "requestBody": {
           "description": "Columns object",
           "required": true,
@@ -553,8 +645,23 @@
       },
       "delete": {
         "tags": ["Columns"],
-        "summary": "Delete one board per id",
-        "parameters": [],
+        "summary": "Delete column per id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "type": "string",
+            "description": "Enter column id"
+          },
+          {
+            "in": "query",
+            "name": "boardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter board id"
+          }
+        ],
         "requestBody": {
           "description": "Columns object",
           "required": true,
@@ -592,14 +699,36 @@
       "post": {
         "tags": ["Cards"],
         "summary": "Create new card",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "required": true,
+            "type": "string",
+            "description": "Enter title name"
+          },
+          {
+            "in": "query",
+            "name": "description",
+            "required": true,
+            "type": "string",
+            "description": "Enter description"
+          },
+          {
+            "in": "query",
+            "name": "columnId",
+            "required": true,
+            "type": "string",
+            "description": "Enter column id"
+          }
+        ],
         "requestBody": {
           "description": "Cards object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CardRequest"
+                "$ref": "#/components/schemas/CreateCardRequest"
               }
             }
           }
@@ -610,7 +739,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CardResponse"
+                  "$ref": "#/components/schemas/CreateCardResponse"
                 }
               }
             }
@@ -628,14 +757,22 @@
       "get": {
         "tags": ["Cards"],
         "summary": "Get all Cards",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "columnId",
+            "required": true,
+            "type": "string",
+            "description": "Enter column id"
+          }
+        ],
         "requestBody": {
           "description": "Cards object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetCardRequest"
+                "$ref": "#/components/schemas/GetAllCardRequest"
               }
             }
           }
@@ -646,7 +783,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetCardResponse"
+                  "$ref": "#/components/schemas/GetAllCardResponse"
                 }
               }
             }
@@ -666,7 +803,15 @@
       "get": {
         "tags": ["Cards"],
         "summary": "Get card per id",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter card id"
+          }
+        ],
         "requestBody": {
           "description": "Cards object",
           "required": true,
@@ -702,7 +847,22 @@
       "put": {
         "tags": ["Cards"],
         "summary": "Edit card per id",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter card id"
+          },
+          {
+            "in": "query",
+            "name": "columnId",
+            "required": true,
+            "type": "string",
+            "description": "Enter column id"
+          }
+        ],
         "requestBody": {
           "description": "Cards object",
           "required": true,
@@ -737,8 +897,23 @@
       },
       "delete": {
         "tags": ["Cards"],
-        "summary": "Delete one card per id",
-        "parameters": [],
+        "summary": "Delete card per id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cardId",
+            "required": true,
+            "type": "string",
+            "description": "Enter card id"
+          },
+          {
+            "in": "query",
+            "name": "columnId",
+            "required": true,
+            "type": "string",
+            "description": "Enter column id"
+          }
+        ],
         "requestBody": {
           "description": "Cards object",
           "required": true,
@@ -1085,7 +1260,776 @@
             "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6IjY2NGY1NTczZTM2MjFhZWRkODkwZDhlZSIsImlhdCI6MTcxNjQ3NTMwNSwiZXhwIjoxNzE3NzcxMzA1fSwiaWF0IjoxNzE2NDgxMDE0LCJleHAiOjE3MTc3NzcwMTR9.qSgMOEjBrtK6XlXa9bwKM4v5xHP3CSmPQkqtx1nLfm4"
           }
         ]
-      }
+      },
+      "CreateBoardRequest": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Board title",
+            "example": "Example"
+          }
+        }
+      },
+      "CreateBoardResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Owner id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "columns": {
+              "type": "array",
+              "description": "Columns array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "title": "first one",
+          "owner": "6660847511a7ec21254bac4d",
+          "columns": [],
+          "_id": "6665d1d0a40295870fc225ee",
+          "createdAt": "2024-06-09T16:01:20.927Z",
+          "updatedAt": "2024-06-09T16:01:20.927Z"
+        }
+      },
+      "GetAllBoardRequest": {
+        "type": "object",
+        "required": ["owner"],
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Board owner",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "GetAllBoardResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Owner id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "columns": {
+              "type": "array",
+              "description": "Columns array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": [
+          {
+            "title": null,
+            "_id": "6662fb31948f214dea2e4d3b",
+            "name": "Serials",
+            "owner": "6660847511a7ec21254bac4d",
+            "columns": [],
+            "createdAt": "2024-06-07T12:21:05.123Z",
+            "updatedAt": "2024-06-07T12:21:05.123Z"
+          },
+          {
+            "title": null,
+            "_id": "6662fb31948f214dea2e4d3b",
+            "name": "Serials",
+            "owner": "6660847511a7ec21254bac4d",
+            "columns": [],
+            "createdAt": "2024-06-07T12:21:05.123Z",
+            "updatedAt": "2024-06-07T12:21:05.123Z"
+          }
+        ]
+      },
+      "OneBoardRequest": {
+        "type": "object",
+        "required": ["boardId"],
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "description": "Board id",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "OneBoardResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Owner id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "columns": {
+              "type": "array",
+              "description": "Columns array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "title": null,
+          "_id": "6662fb31948f214dea2e4d3b",
+          "name": "Serials",
+          "owner": "6660847511a7ec21254bac4d",
+          "columns": [],
+          "createdAt": "2024-06-07T12:21:05.123Z",
+          "updatedAt": "2024-06-07T12:21:05.123Z"
+        }
+      },
+      "EditBoardRequest": {
+        "type": "object",
+        "required": ["boardId", "owner"],
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "description": "Board id",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Board owner",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "title": {
+            "type": "string",
+            "description": "Board title",
+            "example": "Example"
+          }
+        }
+      },
+      "EditBoardResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Owner id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "columns": {
+              "type": "array",
+              "description": "Columns array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "_id": "6665a18a8ac6850e904867be",
+          "title": "Films",
+          "owner": "6660847511a7ec21254bac4d",
+          "columns": [],
+          "createdAt": "2024-06-09T12:35:22.844Z",
+          "updatedAt": "2024-06-09T14:11:42.929Z"
+        }
+      },
+      "DeleteBoardRequest": {
+        "type": "object",
+        "required": ["boardId", "owner"],
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "description": "Board id",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Board owner",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "DeleteBoardResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Owner id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "columns": {
+              "type": "array",
+              "description": "Columns array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "title": "Example",
+          "_id": "6662fb31948f214dea2e4d3b",
+          "name": "Serials",
+          "owner": "6660847511a7ec21254bac4d",
+          "columns": [],
+          "createdAt": "2024-06-07T12:21:05.123Z",
+          "updatedAt": "2024-06-07T12:21:05.123Z"
+        }
+      },
+      "CreateColumnRequest": {
+        "type": "object",
+        "required": ["title", "boardId"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Board title",
+            "example": "Example"
+          },
+          "boardId": {
+            "type": "string",
+            "description": "Board id",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "CreateColumnResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "boardId": {
+              "type": "string",
+              "description": "Board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "cards": {
+              "type": "array",
+              "description": "Cards array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "title": "first one",
+          "boardId": "6662fac1948f214dea2e4d28",
+          "cards": [],
+          "_id": "6665d5c19a5081d18ea0dee6",
+          "createdAt": "2024-06-09T16:18:09.651Z",
+          "updatedAt": "2024-06-09T16:18:09.651Z"
+        }
+      },
+      "GetAllColumnRequest": {
+        "type": "object",
+        "required": ["boardId"],
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "description": "Board id",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "GetAllColumnResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "boardId": {
+              "type": "string",
+              "description": "Board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "cards": {
+              "type": "array",
+              "description": "Cards array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": [
+          {
+            "_id": "6662fb27948f214dea2e4d36",
+            "title": "Film",
+            "boardId": "6662fac1948f214dea2e4d28",
+            "cards": [],
+            "createdAt": "2024-06-07T12:20:55.035Z",
+            "updatedAt": "2024-06-07T12:20:55.035Z"
+          },
+          {
+            "_id": "6662fb2c948f214dea2e4d38",
+            "title": "Kino",
+            "boardId": "6662fac1948f214dea2e4d28",
+            "cards": [],
+            "createdAt": "2024-06-07T12:21:00.284Z",
+            "updatedAt": "2024-06-07T12:21:00.284Z"
+          }
+        ]
+      },
+      "OneColumnRequest": {
+        "type": "object",
+        "required": ["column Id"],
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "description": "Column id",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "OneColumnResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "boardId": {
+              "type": "string",
+              "description": "Board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "cards": {
+              "type": "array",
+              "description": "Cards array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": [
+          {
+            "_id": "6662fb27948f214dea2e4d36",
+            "title": "Film",
+            "boardId": "6662fac1948f214dea2e4d28",
+            "cards": [],
+            "createdAt": "2024-06-07T12:20:55.035Z",
+            "updatedAt": "2024-06-07T12:20:55.035Z"
+          }
+        ]
+      },
+      "EditColumnRequest": {
+        "type": "object",
+        "required": ["boardId", "columnId"],
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "description": "Board id",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "columnId": {
+            "type": "string",
+            "description": "Column id",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "title": {
+            "type": "string",
+            "description": "Board title",
+            "example": "Example"
+          }
+        }
+      },
+      "EditColumnResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "boardId": {
+              "type": "string",
+              "description": "Board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "cards": {
+              "type": "array",
+              "description": "Cards array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "_id": "6662fb27948f214dea2e4d36",
+          "title": "Legend",
+          "boardId": "6662fac1948f214dea2e4d28",
+          "cards": [],
+          "createdAt": "2024-06-07T12:20:55.035Z",
+          "updatedAt": "2024-06-09T15:14:44.751Z"
+        }
+      },
+      "DeleteColumnRequest": {
+        "type": "object",
+        "required": ["boardId", "owner"],
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "description": "Board id",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "columnId": {
+            "type": "string",
+            "description": "Column owner",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "DeleteColumnResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "boardId": {
+              "type": "string",
+              "description": "Board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "cards": {
+              "type": "array",
+              "description": "Cards array",
+              "example": []
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "_id": "6662fb27948f214dea2e4d36",
+          "title": "Legend",
+          "boardId": "6662fac1948f214dea2e4d28",
+          "cards": [],
+          "createdAt": "2024-06-07T12:20:55.035Z",
+          "updatedAt": "2024-06-09T15:14:44.751Z"
+        }
+      },
+      "CreateCardRequest": {
+        "type": "object",
+        "required": ["title", "description", "columnId"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Card title",
+            "example": "Example"
+          },
+          "columnId": {
+            "type": "string",
+            "description": "Column id",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of card",
+            "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          }
+        }
+      },
+      "CreateCardResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "description": {
+              "type": "string",
+              "description": "Card description",
+              "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+            },
+            "priority": {
+              "type": "string",
+              "example": "low"
+            },
+            "deadline": {
+              "type": "string",
+              "example": "12.07.2024"
+            },
+            "columnId": {
+              "type": "string",
+              "description": "Column id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "title": "Kino",
+          "description": "lorem ipsum",
+          "priority": "without priority",
+          "deadline": null,
+          "columnId": "6662fb09948f214dea2e4d30",
+          "_id": "6665cde8ceed0844fa1d11c1",
+          "createdAt": "2024-06-09T15:44:40.964Z",
+          "updatedAt": "2024-06-09T15:44:40.964Z"
+        }
+      },
+      "GetAllCardRequest": {
+        "type": "object",
+        "required": ["columnId"],
+        "properties": {
+          "columnId": {
+            "type": "string",
+            "description": "Column id",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "GetAllCardResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "description": {
+              "type": "string",
+              "description": "Card description",
+              "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+            },
+            "priority": {
+              "type": "string",
+              "example": "low"
+            },
+            "deadline": {
+              "type": "string",
+              "example": "12.07.2024"
+            },
+            "columnId": {
+              "type": "string",
+              "description": "Column id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": [
+          {
+            "_id": "6665cde8ceed0844fa1d11c1",
+            "title": "Kino",
+            "description": "lorem ipsum",
+            "priority": "without priority",
+            "deadline": null,
+            "columnId": "6662fb09948f214dea2e4d30",
+            "createdAt": "2024-06-09T15:44:40.964Z",
+            "updatedAt": "2024-06-09T15:44:40.964Z"
+          },
+          {
+            "_id": "6665d8677e25251fdb9f1e11",
+            "title": "Kino",
+            "description": "lorem ipsum",
+            "priority": "without priority",
+            "deadline": null,
+            "columnId": "6662fb09948f214dea2e4d30",
+            "createdAt": "2024-06-09T16:29:27.832Z",
+            "updatedAt": "2024-06-09T16:29:27.832Z"
+          }
+        ]
+      },
+      "OneCardRequest": {},
+      "OneCardResponse": {},
+      "EditCardRequest": {},
+      "EditCardResponse": {},
+      "DeleteCardRequest": {},
+      "DeleteCardResponse": {}
     },
 
     "securitySchemes": {

@@ -3,6 +3,7 @@ import { Card, Column } from '../model/tasksList.js';
 
 export const addColumn = async (req, res, next) => {
   const { title, boardId } = req.body;
+
   if (!title) {
     return res.status(400).send({ message: 'Title is required' });
   }

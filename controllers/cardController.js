@@ -3,12 +3,11 @@ import { Card } from '../model/tasksList.js';
 
 export const addCard = async (req, res, next) => {
   const { title, description, columnId } = req.body;
-  const { priority } = req.params;
+
   try {
     const cardInfo = {
       title,
       description,
-      priority,
       deadline: null,
       columnId,
     };
