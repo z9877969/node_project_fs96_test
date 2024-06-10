@@ -959,6 +959,10 @@
             "type": "string",
             "description": "user`s id"
           },
+          "name": {
+            "type": "string",
+            "description": "user`s name"
+          },
           "password": {
             "type": "string",
             "description": "user`s password"
@@ -968,33 +972,21 @@
             "description": "user`s email",
             "format": "email"
           },
-          "name": {
-            "type": "string",
-            "description": "user`s name"
-          },
-          "gender": {
-            "type": "string",
-            "description": "user`s name"
-          },
-          "weight": {
-            "type": "number",
-            "description": "user`s weight"
-          },
-          "time": {
-            "type": "number",
-            "description": "user`s time for sport"
-          },
-          "waterRate": {
-            "type": "number",
-            "description": "user`s waterRate"
+          "theme": {
+            "type": "String",
+            "description": "choosen theme by user"
           },
           "avatarURL": {
             "type": "string",
             "description": "user`s avatarURL"
           },
-          "token": {
+          "accessToken": {
             "type": "string",
-            "description": "user`s token"
+            "description": "user`s access token"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "user`s refresh token"
           }
         }
       },
@@ -1096,6 +1088,10 @@
                 "type": "string",
                 "description": "user`s id"
               },
+              "name": {
+                "type": "string",
+                "description": "user`s name"
+              },
               "password": {
                 "type": "string",
                 "description": "user`s password"
@@ -1105,33 +1101,21 @@
                 "description": "user`s email",
                 "format": "email"
               },
-              "name": {
-                "type": "string",
-                "description": "user`s name"
-              },
-              "gender": {
-                "type": "string",
-                "description": "user`s name"
-              },
-              "weight": {
-                "type": "number",
-                "description": "user`s weight"
-              },
-              "time": {
-                "type": "number",
-                "description": "user`s time for sport"
-              },
-              "waterRate": {
-                "type": "number",
-                "description": "user`s waterRate"
+              "theme": {
+                "type": "String",
+                "description": "choosen theme by user"
               },
               "avatarURL": {
                 "type": "string",
                 "description": "user`s avatarURL"
               },
-              "token": {
+              "accessToken": {
                 "type": "string",
-                "description": "user`s token"
+                "description": "user`s access token"
+              },
+              "refreshToken": {
+                "type": "string",
+                "description": "user`s refresh token"
               }
             }
           }
@@ -1143,10 +1127,7 @@
             "password": "$2a$10$lWIBnmq8a3sV1sXXcjpmGOax1Drw4qxNt4ViiQiB244NoUYAPox.G",
             "email": "jasonwilhem12@gmail.com",
             "name": "Jason Wilhem",
-            "gender": "male",
-            "weight": 98,
-            "time": 3,
-            "waterRate": 1000,
+            "theme": "Light",
             "avatarURL": "http://www.gravatar.com/avatar/cae73c2e854be6c0a89fcd6bbb5b28be",
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NGNlNWIzNmExYTA4YmY3NDYyNjVjNyIsImlhdCI6MTcxNjMyMjEyMn0.J5T57VS3La7R271mBFr6gzV8TlrnKYDc1lbBWjh_KmA"
           }
@@ -1187,6 +1168,10 @@
                 "type": "string",
                 "description": "user`s id"
               },
+              "name": {
+                "type": "string",
+                "description": "user`s name"
+              },
               "password": {
                 "type": "string",
                 "description": "user`s password"
@@ -1196,33 +1181,21 @@
                 "description": "user`s email",
                 "format": "email"
               },
-              "name": {
-                "type": "string",
-                "description": "user`s name"
-              },
-              "gender": {
-                "type": "string",
-                "description": "user`s name"
-              },
-              "weight": {
-                "type": "number",
-                "description": "user`s weight"
-              },
-              "time": {
-                "type": "number",
-                "description": "user`s time for sport"
-              },
-              "waterRate": {
-                "type": "number",
-                "description": "user`s waterRate"
+              "theme": {
+                "type": "String",
+                "description": "choosen theme by user"
               },
               "avatarURL": {
                 "type": "string",
                 "description": "user`s avatarURL"
               },
-              "token": {
+              "accessToken": {
                 "type": "string",
-                "description": "user`s token"
+                "description": "user`s access token"
+              },
+              "refreshToken": {
+                "type": "string",
+                "description": "user`s refresh token"
               }
             }
           }
@@ -1234,10 +1207,7 @@
             "password": "$2a$10$lWIBnmq8a3sV1sXXcjpmGOax1Drw4qxNt4ViiQiB244NoUYAPox.G",
             "email": "jasonwilhem12@gmail.com",
             "name": "Jason Wilhem",
-            "gender": "male",
-            "weight": 98,
-            "time": 3,
-            "waterRate": 1000,
+            "theme": "Violet",
             "avatarURL": "http://www.gravatar.com/avatar/cae73c2e854be6c0a89fcd6bbb5b28be",
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NGNlNWIzNmExYTA4YmY3NDYyNjVjNyIsImlhdCI6MTcxNjMyMjEyMn0.J5T57VS3La7R271mBFr6gzV8TlrnKYDc1lbBWjh_KmA"
           }
