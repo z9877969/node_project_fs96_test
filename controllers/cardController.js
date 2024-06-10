@@ -1,14 +1,14 @@
+import moment from 'moment';
 import HttpError from '../helpers/HttpError.js';
 import { Card } from '../model/tasksList.js';
 
 export const addCard = async (req, res, next) => {
   const { title, description, columnId } = req.body;
-  const { priority } = req.params;
+
   try {
     const cardInfo = {
       title,
       description,
-      priority,
       deadline: null,
       columnId,
     };
@@ -39,6 +39,7 @@ export const getAllCards = async (req, res, next) => {
 
 export const getOneCard = async (req, res, next) => {
   const { cardId } = req.params;
+  const { columnId } = req.body;
 
   if (!cardId) {
     throw HttpError(404);
@@ -51,6 +52,10 @@ export const getOneCard = async (req, res, next) => {
       throw HttpError(404);
     }
 
+    if (!card.columnId || card.columnId.toString() !== columnId.toString()) {
+      throw HttpError(400, 'Card does not belong to the specified column');
+    }
+
     res.status(200).send(card);
   } catch (error) {
     next(error);
@@ -61,6 +66,10 @@ export const editCard = async (req, res, next) => {
   const { cardId } = req.params;
   const { columnId } = req.body;
 
+  if (req.body.deadline) {
+    req.body.deadline = moment(req.body.deadline, 'DD.MM.YYYY').toDate();
+  }
+
   try {
     const card = await Card.findById(cardId);
 
@@ -68,7 +77,7 @@ export const editCard = async (req, res, next) => {
       throw HttpError(404);
     }
 
-    if (card.columnId.toString() !== columnId.toString()) {
+    if (!card.columnId || card.columnId.toString() !== columnId.toString()) {
       throw HttpError(400, 'Card does not belong to the specified column');
     }
 
@@ -93,11 +102,11 @@ export const deleteCard = async (req, res, next) => {
       throw HttpError(404);
     }
 
-    if (card.columnId.toString() !== columnId.toString()) {
+    if (!card.columnId || card.columnId.toString() !== columnId.toString()) {
       throw HttpError(400, 'Card does not belong to the specified column');
     }
 
-    const result = await Card.findByIdAndDelete({ _id: cardId });
+    const result = await Card.findByIdAndDelete(cardId);
 
     res.status(200).json(result);
   } catch (error) {

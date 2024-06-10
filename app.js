@@ -8,7 +8,7 @@ import authRouter from './routes/authRouter.js'
 import userRouter from './routes/userRouter.js';
 import boardRouter from './routes/boardRoutes.js';
 import columnRouter from './routes/columnRouters.js';
-import cardRouter from './routes/cardRouter.js';
+import cardRouters from './routes/cardRouters.js';
 
 export const app = express();
 
@@ -21,7 +21,7 @@ app.use('/users/', userRouter);
 
 app.use('/boards/', boardRouter);
 app.use('/columns/', columnRouter);
-app.use('/cards/', cardRouter);
+app.use('/cards/', cardRouters);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
