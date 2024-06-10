@@ -1,3 +1,4 @@
+import moment from 'moment';
 import HttpError from '../helpers/HttpError.js';
 import { Card } from '../model/tasksList.js';
 
@@ -59,6 +60,10 @@ export const getOneCard = async (req, res, next) => {
 export const editCard = async (req, res, next) => {
   const { cardId } = req.params;
   const { columnId } = req.body;
+
+  if (req.body.deadline) {
+    req.body.deadline = moment(req.body.deadline, 'DD.MM.YYYY').toDate();
+  }
 
   try {
     const card = await Card.findById(cardId);

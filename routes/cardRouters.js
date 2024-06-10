@@ -7,6 +7,8 @@ import {
   getOneCard,
 } from '../controllers/cardController.js';
 import { auth } from '../middlewares/authenticate.js';
+// import validateBody from '../helpers/validateBody.js';
+// import { dateCardSchema } from '../schemas/cardSchemas.js';
 
 const cardRouter = express.Router();
 

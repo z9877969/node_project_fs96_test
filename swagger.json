@@ -1692,7 +1692,7 @@
       },
       "OneColumnRequest": {
         "type": "object",
-        "required": ["column Id"],
+        "required": ["columnId"],
         "properties": {
           "boardId": {
             "type": "string",
@@ -1814,7 +1814,7 @@
       },
       "DeleteColumnRequest": {
         "type": "object",
-        "required": ["boardId", "owner"],
+        "required": ["boardId", "columnId"],
         "properties": {
           "boardId": {
             "type": "string",
@@ -1823,7 +1823,7 @@
           },
           "columnId": {
             "type": "string",
-            "description": "Column owner",
+            "description": "Column id",
             "example": "6665a18a8ac6850e904867be"
           }
         }
@@ -2024,12 +2024,214 @@
           }
         ]
       },
-      "OneCardRequest": {},
-      "OneCardResponse": {},
-      "EditCardRequest": {},
-      "EditCardResponse": {},
-      "DeleteCardRequest": {},
-      "DeleteCardResponse": {}
+      "OneCardRequest": {
+        "type": "object",
+        "required": ["cardId"],
+        "properties": {
+          "boardId": {
+            "type": "string",
+            "description": "Card id",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "OneCardResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "description": {
+              "type": "string",
+              "description": "Card description",
+              "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+            },
+            "priority": {
+              "type": "string",
+              "example": "low"
+            },
+            "deadline": {
+              "type": "string",
+              "example": "12.07.2024"
+            },
+            "columnId": {
+              "type": "string",
+              "description": "Column id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "_id": "6665d8677e25251fdb9f1e11",
+          "title": "Kino",
+          "description": "lorem ipsum",
+          "priority": "without priority",
+          "deadline": null,
+          "columnId": "6662fb09948f214dea2e4d30",
+          "createdAt": "2024-06-09T16:29:27.832Z",
+          "updatedAt": "2024-06-09T16:29:27.832Z"
+        }
+      },
+      "EditCardRequest": {
+        "type": "object",
+        "required": ["cardId", "columnId"],
+        "properties": {
+          "columnId": {
+            "type": "string",
+            "description": "Column id",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "title": {
+            "type": "string",
+            "description": "Board title",
+            "example": "Example"
+          },
+          "description": {
+            "type": "string",
+            "description": "Card description",
+            "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+          },
+          "priority": {
+            "type": "string",
+            "example": "low"
+          },
+          "deadline": {
+            "type": "string",
+            "example": "12.07.2024"
+          }
+        },
+        "example": {
+          "_id": "6665d8677e25251fdb9f1e11",
+          "title": "Kino",
+          "description": "Lorem ipsum dolor",
+          "priority": "low",
+          "deadline": "2024-07-21T21:00:00.000Z",
+          "columnId": "6662fb09948f214dea2e4d30",
+          "createdAt": "2024-06-09T16:29:27.832Z",
+          "updatedAt": "2024-06-10T10:33:29.799Z"
+        }
+      },
+      "EditCardResponse": {
+        "type": "object",
+        "required": ["cardId", "columnId"],
+        "properties": {
+          "columnId": {
+            "type": "string",
+            "description": "Column id",
+            "example": "6665a18a8ac6850e904867be"
+          },
+          "title": {
+            "type": "string",
+            "description": "Board title",
+            "example": "Example"
+          },
+          "description": {
+            "type": "string",
+            "description": "Card description",
+            "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+          },
+          "priority": {
+            "type": "string",
+            "example": "low"
+          },
+          "deadline": {
+            "type": "string",
+            "example": "12.07.2024"
+          }
+        },
+        "example": {
+          "_id": "6665d8677e25251fdb9f1e11",
+          "title": "Kino",
+          "description": "Lorem ipsum dolor",
+          "priority": "low",
+          "deadline": "2024-07-21T21:00:00.000Z",
+          "columnId": "6662fb09948f214dea2e4d30",
+          "createdAt": "2024-06-09T16:29:27.832Z",
+          "updatedAt": "2024-06-10T10:33:29.799Z"
+        }
+      },
+      "DeleteCardRequest": {
+        "type": "object",
+        "required": ["columnId", "cardId"],
+        "properties": {
+          "columnId": {
+            "type": "string",
+            "description": "Column id",
+            "example": "6665a18a8ac6850e904867be"
+          }
+        }
+      },
+      "DeleteCardResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Board title",
+              "example": "Example"
+            },
+            "description": {
+              "type": "string",
+              "description": "Card description",
+              "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+            },
+            "priority": {
+              "type": "string",
+              "example": "low"
+            },
+            "deadline": {
+              "type": "string",
+              "example": "12.07.2024"
+            },
+            "columnId": {
+              "type": "string",
+              "description": "Column id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "_id": {
+              "type": "string",
+              "description": "board id",
+              "example": "6665a18a8ac6850e904867be"
+            },
+            "createAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            },
+            "updateAt": {
+              "type": "string",
+              "example": "2024-06-09T12:35:22.844Z"
+            }
+          }
+        },
+        "example": {
+          "_id": "6665d8677e25251fdb9f1e11",
+          "title": "Kino",
+          "description": "lorem ipsum",
+          "priority": "low",
+          "deadline": null,
+          "columnId": "6662fb09948f214dea2e4d30",
+          "createdAt": "2024-06-09T16:29:27.832Z",
+          "updatedAt": "2024-06-09T16:29:27.832Z"
+        }
+      }
     },
 
     "securitySchemes": {
