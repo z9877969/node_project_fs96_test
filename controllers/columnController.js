@@ -44,16 +44,17 @@ export const getAllColumns = async (req, res, next) => {
 
 export const getOneColumn = async (req, res, next) => {
   const { columnId } = req.params;
-
-  if (!columnId) {
-    throw HttpError(404);
-  }
+  const { boardId } = req.body;
 
   try {
     const column = await Column.findById(columnId);
 
     if (!column) {
       throw HttpError(404);
+    }
+
+    if (!column.boardId || column.boardId.toString() !== boardId.toString()) {
+      throw HttpError(400, 'Column does not belong to the specified board');
     }
 
     const cards = await Card.find({ columnId });
@@ -80,7 +81,7 @@ export const editColumn = async (req, res, next) => {
       throw HttpError(404);
     }
 
-    if (column.boardId.toString() !== boardId.toString()) {
+    if (!column.boardId || column.boardId.toString() !== boardId.toString()) {
       throw HttpError(400, 'Column does not belong to the specified board');
     }
 
@@ -105,7 +106,7 @@ export const deleteColumn = async (req, res, next) => {
       throw HttpError(404);
     }
 
-    if (column.boardId.toString() !== boardId.toString()) {
+    if (!column.boardId || column.boardId.toString() !== boardId.toString()) {
       throw HttpError(400, 'Column does not belong to the specified board');
     }
 
