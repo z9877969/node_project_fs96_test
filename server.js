@@ -2,7 +2,7 @@ import { connect } from 'mongoose';
 import { app } from './app.js';
 import 'dotenv/config';
 
-const { DB_HOST, PORT } = process.env;
+const { DB_HOST, PORT = 4000 } = process.env;
 
 const startServer = async () => {
   try {
