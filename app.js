@@ -2,7 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json' with { type: "json" };
+// import swaggerDocument from './swagger.json' with { type: "json" };
 
 import authRouter from './routes/authRouter.js'
 import userRouter from './routes/userRouter.js';
@@ -26,7 +26,7 @@ app.use('/cards/', cardRouters);
 
 app.use('/theme/', themeRouter)
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Route not found' });
